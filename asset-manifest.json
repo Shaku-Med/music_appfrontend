@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/music_appbackend/static/css/main.dc582d8f.css",
+    "main.js": "/music_appbackend/static/js/main.083adfae.js",
+    "static/js/27.f76df233.chunk.js": "/music_appbackend/static/js/27.f76df233.chunk.js",
+    "index.html": "/music_appbackend/index.html",
+    "static/media/logo.svg": "/music_appbackend/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg"
+  },
+  "entrypoints": [
+    "static/css/main.dc582d8f.css",
+    "static/js/main.083adfae.js"
+  ]
+}
