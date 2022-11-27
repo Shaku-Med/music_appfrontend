@@ -39,7 +39,7 @@ function Auth() {
             code: code,
             c_usr: uuid()
         }
-        axios.post("https://musicbackend.mohamedbrima.repl.co/user/auth", arr).then(res => { 
+        axios.post("http://localhost:3005/user/auth", arr).then(res => { 
             if(res.data.success === "success"){ 
                 Cookies.set("c_usr", res.data.c_usr, {secure: true, expires: 365})
                 window.location.reload()
