@@ -18,7 +18,7 @@ function Home(props) {
  const [data, setdata] = useState([])
 
  useEffect(() => { 
-    axios.post("http://localhost:3005/home/data/get", { 
+    axios.post("https://musicbackend.mohamedbrima.repl.co/home/data/get", { 
        c_usr: Cookies.get("c_usr")
     }).then(res => { 
         if(res.data !== "wrong"){ 

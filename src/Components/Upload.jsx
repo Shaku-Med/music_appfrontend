@@ -30,7 +30,7 @@ function Upload() {
             let arr = { 
                 image: image
             } 
-           axios.post("http://localhost:3005/uploads/image", arr, { 
+           axios.post("https://musicbackend.mohamedbrima.repl.co/uploads/image", arr, { 
                 headers: { 
                     "Content-Type": "multipart/form-data"
                 }
@@ -42,7 +42,7 @@ function Upload() {
             audio: audio,
             title: title
            } 
-       axios.post("http://localhost:3005/uploads/audio", ars, { 
+       axios.post("https://musicbackend.mohamedbrima.repl.co/uploads/audio", ars, { 
             headers: { 
                 "Content-Type": "multipart/form-data"
             }

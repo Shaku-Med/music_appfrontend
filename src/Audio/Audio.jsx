@@ -24,7 +24,7 @@ function Audio() {
    
 
     axios
-      .post("http://localhost:3005/home/data/get", {
+      .post("https://musicbackend.mohamedbrima.repl.co/home/data/get", {
         c_usr: Cookies.get("c_usr"),
       })
       .then((res) => {
