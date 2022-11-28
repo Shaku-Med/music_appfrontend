@@ -39,6 +39,45 @@ function App() {
         }
       }, 10);
     }
+
+    var a;
+
+
+    window.onkeydown = e => { 
+      let body = document.querySelector("body")
+      if(e.ctrlKey && e.key === "/"){ 
+        if(body.requestFullscreen()){ 
+          body.requestFullscreen()
+        }
+        else if(body.webkitRequestFullscreen()){ 
+          body.webkitRequestFullscreen()
+        }
+        else if(body.msRequestFullscreen()){ 
+          body.msRequestFullscreen()
+        }
+        else if(body.requestPointerLock()){ 
+          body.requestPointerLock()
+        }
+      }
+    }
+
+    window.ondblclick = e => { 
+      let body = document.querySelector("body")
+      if(e.ctrlKey && e.key === "/"){ 
+        if(body.requestFullscreen()){ 
+          body.requestFullscreen()
+        }
+        else if(body.webkitRequestFullscreen()){ 
+          body.webkitRequestFullscreen()
+        }
+        else if(body.msRequestFullscreen()){ 
+          body.msRequestFullscreen()
+        }
+        else if(body.requestPointerLock()){ 
+          body.requestPointerLock()
+        }
+      }
+    }
   }, [])
 
   return (

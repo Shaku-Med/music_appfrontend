@@ -10,7 +10,7 @@ body{
   margin: 0;
   padding: 0;
   width: 100%;
-  overflow: hidden;
+  scroll-behavior: smooth;
 }
 
 .error_modal { 
@@ -106,20 +106,19 @@ body{
   width: 100%;
   height:10.5px;
   border-radius: 10px;
-  border: 1px solid var(--maincl);
+  border: 1px solid rgba(128, 128, 128, 0.667);
 }
 
 .seekers_main input::-webkit-slider-thumb{ 
-  box-shadow: 1px 1px 1px #828282;
   border: 1px solid #8A8A8A;
-  height: 10px;
+  height: 20px;
   width: 20px;
-  border-radius: 6px;
+  border-radius: 50%;
   background: var(--maincl);
   cursor: pointer;
   -webkit-appearance: none;
   appearance: none;
-  margin-top: -1px;
+  margin-top: -5px;
 }
 
 .seekers_main input::-ms-thumb {
@@ -133,6 +132,22 @@ body{
   -webkit-appearance: none;
   appearance: none;
   margin-top: -1px;
+}
+
+.now_playing { 
+  display: flex;
+  align-items: flex-start;
+  justify-content: start;
+  gap:10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.now_playing img { 
+  width: 20rem;
+  height: 20rem;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 input[type=range]::-moz-range-track {
@@ -186,40 +201,48 @@ input[type="range"]::-ms-track {
 }
 
 .home_tools { 
-  display: flex;
+  display: grid;
   gap:10px;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
 }
 
 .im_tool1 { 
   position: relative;
   width: 100%;
-  flex: 1 1 20rem;
-  border: 1px solid #eaeae9a0;
+  flex: 1 1 30rem;
   padding:5px;
-  overflow: hidden;
   border-radius: 5px;
-  height: 400px;
-  overflow: auto;
+  cursor: pointer;
+}
+
+.im_tool1:hover{ 
+  opacity: 0.5;
 }
 
 .im_tool1 img { 
-  width: 100%;
-  height: 300px;
+  width: 5rem;
+  height: 5rem;
   object-fit: cover;
   border-radius: 5px;
   margin-bottom: 5px;
   -webkit-user-select: none;
   user-select: none;
   pointer-events:none;
+  transition: .5s ease-in-out;
+  object-position: 0 0 ;
 }
+
+
+
 
 .im_tool1 i { 
   position: absolute;
   top:50%;
-  left: 50%;
+  left: 13%;
   transform: translate(-50%, -50%);
   height: 3rem;
   width: 3rem;
@@ -230,6 +253,7 @@ input[type="range"]::-ms-track {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: .3s ease-in-out;
 }
 
 .im_tool1 i:hover ~ img { 
@@ -270,7 +294,102 @@ input[type="range"]::-ms-track {
   transition: .5s ease-in-out;
 }
 
+.im_tool1 { 
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap:10px;
+}
+
+.now_playing { 
+  position: relative;
+}
+
+.now_playing i { 
+  position: absolute;
+  font-size: 40px;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  border-radius: 50%;
+  background: #000;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  visibility: hidden;
+  opacity: 0;
+  transition: .3s ease-in-out;
+}
+
+.now_playing:hover i { 
+  visibility: visible;
+  opacity: 1;
+}
+
+.now_playing { 
+  background-image: linear-gradient(to top left, #00000058 0%, var(--mainbg) 60%), url("https://musicbackend.mohamedbrima.repl.co/Images/fe592dba2890d81791be13dc65fc324b1a-21-cheap-thrills-sia.2x.rsocial.w600.webp");
+  background-position: 0 0;
+  background-size: cover;
+  padding: 10px;
+  border-radius: 10px;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.song_pn .h2 { 
+  font-size: 100px;
+  font-weight: bolder;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.im_tool1 .h3 { 
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.visualizer { 
+  position: fixed;
+  bottom:0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+}
+
+.controls_one img { 
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: .3s ease-in-out;
+}
+
+
+.mage_cont img { 
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/*  */
+
+.controls_one i { 
+  display: none;
+}
+
 @media screen and (max-width:600px) {
+
+  .song_pn .h2{ 
+    font-size: 60px;
+  }
   .seekers_main { 
     position: absolute;
     top:90%;
@@ -278,17 +397,104 @@ input[type="range"]::-ms-track {
     padding:10px;
     background: var(--mainbg);
     border-bottom: 1px solid #eaeae9a0;
+    transition: .3s ease-in-out;
   }
 
   .tool_aud_grid { 
-    margin-top: 100px;
+    margin-top: 110px;
     padding: 10px;
+    transition: .3s ease-in-out;
   }
 
   .uploadspart { 
     margin-top: 100px;
     padding: 10px;
+    transition: .3s ease-in-out;
   }
+
+  .now_playing img { 
+    width: 10rem;
+    height: 10rem;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: .3s ease-in-out;
+  }
+
+  /*  */
+
+  .controls_one img { 
+    pointer-events:all;
+    -webkit-user-select: none;
+    user-select: none;
+    transition: .3s ease-in-out;
+  }
+
+  .audio_book { 
+    transition: .3s ease-in-out;
+  }
+
+  .audio_book.audbook { 
+    height: 100vh;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    transition: .3s ease-in-out;
+    background: transparent;
+    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(30px);
+  }
+  
+  .aud_conta.aucota { 
+    flex-direction: column;
+    max-width: 400px;
+    transition: .3s ease-in-out;
+  }
+
+  .aud_conta img.acota_img { 
+    width: 100%;
+    height: 400px;
+    transition: .3s ease-in-out;
+    box-shadow: 0 0 5px #00000058;
+  }
+  
+  .controls_one.onecot { 
+    flex-direction: column;
+    position: relative;
+    transition: .3s ease-in-out;
+  }
+  
+   .seekers_main.sek_me{ 
+    top:0;
+    position: relative;
+    border: none;
+    transition: .3s ease-in-out;
+    background: transparent;
+  }
+  
+  .controls.ct_me{ 
+    font-size: 40px;
+    transition: .3s ease-in-out;
+  }
+
+  .controls_one i.hmi { 
+    display: block;
+    font-size: 50px;
+    position: absolute;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top:-20%;
+    right: 10px;
+    transition: .3s ease-in-out;
+  }
+
+  body.mainboxy { 
+    overflow: hidden;
+  }
+
 }
 
 @media (prefers-color-scheme: dark){ 

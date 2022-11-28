@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { ContextAudio } from '../Audconnection/ContextAudio'
 
-function Home(props) {
+function Home({socket}) {
  const {value, setvalue, playing, setplaying, audid, setaudid} = useContext(ContextAudio)
 
 
@@ -16,18 +16,48 @@ function Home(props) {
  })
 
  const [data, setdata] = useState([])
+ const [notdata, notelist] = useState([])
+ const [note, setnote] = useState([])
 
  useEffect(() => { 
-    axios.post("http://localhost:3005/home/data/get", { 
+    axios.post("https://musicbackend.mohamedbrima.repl.co/home/data/get", { 
        c_usr: Cookies.get("c_usr")
     }).then(res => { 
         if(res.data !== "wrong"){ 
             setdata(res.data)
+            notelist(res.data)
+            res.data.map(val => { 
+                if(val.audioid === localStorage.getItem('index') || val.audioid === value){ 
+                    setnote(val)
+                }
+            })
         }
         else { 
             Cookies.remove("c_usr")
         }
     })
+
+ }, [])
+
+ useEffect(() => { 
+    notdata.map((val) => { 
+        if(val.audioid === localStorage.getItem('index') || val.audioid === value){ 
+            setnote(val)
+        }
+    })
+ }, [value])
+
+ useEffect(() => { 
+    window.onscroll = e => { 
+        let scroll = window.scrollY
+        let now_playing = document.querySelector(".now_playing")
+
+        now_playing.style.backgroundPositionY = .5 * scroll + 'px'
+    }
+
+    // Visualizer...
+
+
 
  }, [])
 
@@ -48,49 +78,103 @@ function Home(props) {
                Logout
            </button>
         </Link>
+
+        
+        <div style={{backgroundImage: `linear-gradient(to top left, #00000058 0%, var(--mainbg) 60%), url(${note.audioimage})`}} className="now_playing">
+            <div className="mage_cont" style={{position: 'relative'}}>
+            <img
+             onError={e => { 
+                e.target.src = "https://st.depositphotos.com/1002049/3381/i/600/depositphotos_33813075-stock-photo-error.jpg"
+            }}
+             src={note.audioimage} alt="" />
+            <i 
+            onClick={e => { 
+
+                if(localStorage.getItem("index") === note.audioid){ 
+                    let audio = document.querySelector("audio")
+                        if(playing === false){ 
+                            setplaying(true)
+                            audio.play()
+                        }
+                        else { 
+                            setplaying(false)
+                            audio.pause()
+                    }
+                }
+                else { 
+                    setvalue(note.audioid)  
+                }
+
+                if(!localStorage.getItem("index")){ 
+                    localStorage.setItem("index", note.audioid)
+                    window.location.reload()
+                }
+                else if(localStorage.getItem("index") === null){ 
+                    localStorage.setItem("index", note.audioid)
+                    window.location.reload()
+                }
+                else { 
+                    localStorage.setItem("index", note.audioid)
+                }
+            }}
+             className={value === note.audioid ? playing === false ? "fa fa-play" : "fa fa-pause" : "fa fa-play"} style={{color: 'white'}}></i>
+            </div>
+            <div className="song_pn">
+                <div title={note.audiotitle} className="h2">{note.audiotitle}</div>
+                <div className="p">{localStorage.getItem("index") && localStorage.getItem("index") !== null ? "Now playing...": "Nothing's playing."}</div>
+            </div>
+        </div>
+
         <div className="home_tools">
             { 
                data.map((val, key) => { 
                  return ( 
-                    <div key={key} className="im_tool1">
+                    <div  
+                    onClick={e => { 
+
+                        if(localStorage.getItem("index") === val.audioid){ 
+
+                          
+                            let audio = document.querySelector("audio")
+                                if(playing === false){ 
+                                    setplaying(true)
+                                    audio.play()
+                                }
+                                else { 
+                                    setplaying(false)
+                                    audio.pause()
+                            }
+                        }
+                        else { 
+                            setvalue(val.audioid)  
+                        }
+
+                        if(!localStorage.getItem("index")){ 
+                            localStorage.setItem("index", val.audioid)
+                            window.location.reload()
+                        }
+                        else if(localStorage.getItem("index") === null){ 
+                            localStorage.setItem("index", val.audioid)
+                            window.location.reload()
+                        }
+                        else { 
+                            localStorage.setItem("index", val.audioid)
+                        }
+                    }}
+                     key={key} className="im_tool1">
                         <img onError={e => { 
                             e.target.src = "https://st.depositphotos.com/1002049/3381/i/600/depositphotos_33813075-stock-photo-error.jpg"
                         }} src={val.audioimage} alt="" />
-                        <hr />
-                        <div className="h3">{val.audiotitle}</div>
-                        <i onClick={e => { 
-
-                            if(localStorage.getItem("index") === val.audioid){ 
-                                let audio = document.querySelector("audio")
-                                    if(playing === false){ 
-                                        setplaying(true)
-                                        audio.play()
-                                    }
-                                    else { 
-                                        setplaying(false)
-                                        audio.pause()
-                                }
-                            }
-                            else { 
-                                setvalue(val.audioid)  
-                            }
-
-                            if(!localStorage.getItem("index")){ 
-                                localStorage.setItem("index", val.audioid)
-                                window.location.reload()
-                            }
-                            else if(localStorage.getItem("index") === null){ 
-                                localStorage.setItem("index", val.audioid)
-                                window.location.reload()
-                            }
-                            else { 
-                                localStorage.setItem("index", val.audioid)
-                            }
-                        }} className={value === val.audioid ? playing === false ? "fa fa-play" : "fa fa-pause" : "fa fa-play"}></i>
+                        <div title={val.audiotitle} className="h3" style={{color:localStorage.getItem("index") === val.audioid ? "palegreen" : "val(--maincl)" ? value === val.audioid ? playing === false : "var(--maincl)" : "palegreen"}}>{val.audiotitle}</div>
+                        <i  className={value === val.audioid ? playing === false ? "fa fa-play" : "fa fa-pause" : "fa fa-play"} style={{color: 'white'}}></i>
                     </div>
                  )
                })
             }
+        </div>
+
+        <div className="visualizer">
+            <canvas id="canvas"></canvas>
         </div>
     </div>
   )

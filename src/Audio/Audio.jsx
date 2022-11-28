@@ -24,7 +24,7 @@ function Audio() {
    
 
     axios
-      .post("http://localhost:3005/home/data/get", {
+      .post("https://musicbackend.mohamedbrima.repl.co/home/data/get", {
         c_usr: Cookies.get("c_usr"),
       })
       .then((res) => {
@@ -98,9 +98,26 @@ function Audio() {
 
 
       audio.ontimeupdate = e => {
-        //  let ml = parseInt((audio.duration / 60 - audio.currentTime / 60) % 60)
-        //  var sl = parseInt(audio.duration % 60 - audio.currentTime);
-        //  console.log(sl)
+          let ml = parseInt((audio.duration / 60 - audio.currentTime / 60) % 60)
+          var sl = parseInt(audio.duration % 60 - audio.currentTime);
+
+          if(!isNaN(audio.duration)){ 
+            if(sl < 10){ 
+              if(sl < -9){ 
+                setplaylen("-" + ml + ":" + Math.abs(sl))
+              }
+              else { 
+                setplaylen("-" + ml + ":0" + Math.abs(sl))
+              }
+            }
+            else { 
+              setplaylen("-" + ml + ":" + Math.abs(sl))
+            }
+
+          }
+          else { 
+            setplaylen("-0:00")
+          }
   
         //counting up
         var s = parseInt(audio.currentTime % 60);
@@ -116,23 +133,23 @@ function Audio() {
         // Max Duration done
   
   
-        var dura = audio.duration
+        // var dura = audio.duration
   
-        var sec = new Number()
-        var min = new Number()
+        // var sec = new Number()
+        // var min = new Number()
   
-        sec = Math.floor( dura );    
-        min = Math.floor( sec / 60 );
-        min = min >= 10 ? min : '0' + min;    
-        sec = Math.floor( sec % 60 );
-        sec = sec >= 10 ? sec : '0' + sec;
+        // sec = Math.floor( dura );    
+        // min = Math.floor( sec / 60 );
+        // min = min >= 10 ? min : '0' + min;    
+        // sec = Math.floor( sec % 60 );
+        // sec = sec >= 10 ? sec : '0' + sec;
   
-        if(!isNaN(audio.duration)){ 
-          setplaylen(min + ":" + sec)
-        }
-        else { 
-          setplaylen("0:00")
-        }
+        // if(!isNaN(audio.duration)){ 
+        //   setplaylen(min + ":" + sec)
+        // }
+        // else { 
+        //   setplaylen("0:00")
+        // }
   
       }
 
@@ -146,6 +163,10 @@ function Audio() {
           rangeie.value = position
         }
       }, 1000);
+
+
+
+      // 
 
   }, []);
 
@@ -204,8 +225,10 @@ function Audio() {
 
       }
     })
-  }, [value])
 
+ 
+
+  }, [value])
 
 
 
@@ -214,11 +237,54 @@ function Audio() {
     <div className="audio_book" style={{display: localStorage.getItem("index") && localStorage.getItem('index') !== null ? "flex" : "none"}}>
       <div className="aud_conta">
         <div className="controls_one">
+          <i 
+            onClick={e => { 
+              let audio_book = document.querySelector(".audio_book")
+              let aud_conta = document.querySelector(".aud_conta")
+              let audco_img = document.querySelector(".aud_conta img")
+              let controls_one = document.querySelector(".controls_one")
+              let controli = document.querySelector(".controls_one i")
+              let seekers_main = document.querySelector(".seekers_main")
+              let controls = document.querySelector(".controls")
+              let body = document.querySelector("body")
+
+              audio_book.classList.remove("audbook")
+              aud_conta.classList.remove("aucota")
+              audco_img.classList.remove("acota_img")
+              controls_one.classList.remove("onecot")
+              controls.classList.remove("ct_me")
+              controli.classList.remove("hmi")
+              seekers_main.classList.remove("sek_me")
+              body.classList.remove("mainboxy")
+              body.setAttribute("style", "overflow: hidden auto")
+            }}
+          className="fa fa-caret-down"></i>
           <img
+            onClick={e => { 
+              let audio_book = document.querySelector(".audio_book")
+              let aud_conta = document.querySelector(".aud_conta")
+              let audco_img = document.querySelector(".aud_conta img")
+              let controls_one = document.querySelector(".controls_one")
+              let controli = document.querySelector(".controls_one i")
+              let seekers_main = document.querySelector(".seekers_main")
+              let controls = document.querySelector(".controls")
+              let body = document.querySelector("body")
+
+
+              audio_book.classList.add("audbook")
+              aud_conta.classList.add("aucota")
+              audco_img.classList.add("acota_img")
+              controls_one.classList.add("onecot")
+              controls.classList.add("ct_me")
+              controli.classList.add("hmi")
+              seekers_main.classList.add("sek_me")
+              body.classList.add("mainboxy")
+              body.removeAttribute("style")
+            }}
             src={data.audioimage}
             alt=""
           />
-          <marquee behavior="" direction="">
+          <marquee behavior="" direction="" style={{maxWidth: "150px"}}>
             <h1>{data.audiotitle}</h1>
           </marquee>
         </div>

@@ -30,7 +30,7 @@ function Upload() {
             let arr = { 
                 image: image
             } 
-           axios.post("http://localhost:3005/uploads/image", arr, { 
+           axios.post("https://musicbackend.mohamedbrima.repl.co/uploads/image", arr, { 
                 headers: { 
                     "Content-Type": "multipart/form-data"
                 }
@@ -42,7 +42,7 @@ function Upload() {
             audio: audio,
             title: title
            } 
-       axios.post("http://localhost:3005/uploads/audio", ars, { 
+       axios.post("https://musicbackend.mohamedbrima.repl.co/uploads/audio", ars, { 
             headers: { 
                 "Content-Type": "multipart/form-data"
             }
@@ -71,7 +71,9 @@ function Upload() {
             </div>
             <div className="cols">
                 <label htmlFor="audios">Choose Your Audio</label>
-                <input onChange={e => setaudio(e.target.files[0])} accept='audio/*' type="file" name="" id="audios" />
+                <input onChange={e => { 
+                    setaudio(e.target.files[0])
+                }} accept='audio/mpeg, video/mp4, audio/wav, audio/mp3' type="file" name="" id="audios" />
             </div>
             <div className="cols">
                 <label htmlFor="image">Choose Your Image</label>
@@ -80,7 +82,7 @@ function Upload() {
              <div style={{width: "100%"}} onPointerOver={e => { 
                 let moveme = document.getElementById("moveme")
                 if(title === ""){ 
-                    if(e.clientX > 362.3999938964844){ 
+                    if(e.clientX > 200.3999938964844){ 
                         moveme.style.marginLeft = "0%"
                     }
                     else { 
@@ -88,7 +90,7 @@ function Upload() {
                     }
                 }
                 else if(audio === ""){ 
-                    if(e.clientX > 362.3999938964844){ 
+                    if(e.clientX > 200.3999938964844){ 
                         moveme.style.marginLeft = "0%"
                     }
                     else { 
@@ -96,7 +98,7 @@ function Upload() {
                     }
                 }
                 else if(image === ""){ 
-                    if(e.clientX > 362.3999938964844){ 
+                    if(e.clientX > 200.3999938964844){ 
                         moveme.style.marginLeft = "0%"
                     }
                     else { 
