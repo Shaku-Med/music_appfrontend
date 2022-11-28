@@ -242,7 +242,7 @@ input[type="range"]::-ms-track {
 .im_tool1 i { 
   position: absolute;
   top:50%;
-  left: 13%;
+  left: 50%;
   transform: translate(-50%, -50%);
   height: 3rem;
   width: 3rem;
@@ -385,40 +385,10 @@ input[type="range"]::-ms-track {
   display: none;
 }
 
-@media screen and (max-width:600px) {
+.co_mi { 
+  position: relative;
+}
 
-  .song_pn .h2{ 
-    font-size: 60px;
-  }
-  .seekers_main { 
-    position: absolute;
-    top:90%;
-    left: 0;
-    padding:10px;
-    background: var(--mainbg);
-    border-bottom: 1px solid #eaeae9a0;
-    transition: .3s ease-in-out;
-  }
-
-  .tool_aud_grid { 
-    margin-top: 110px;
-    padding: 10px;
-    transition: .3s ease-in-out;
-  }
-
-  .uploadspart { 
-    margin-top: 100px;
-    padding: 10px;
-    transition: .3s ease-in-out;
-  }
-
-  .now_playing img { 
-    width: 10rem;
-    height: 10rem;
-    object-fit: cover;
-    border-radius: 10px;
-    transition: .3s ease-in-out;
-  }
 
   /*  */
 
@@ -437,17 +407,19 @@ input[type="range"]::-ms-track {
     height: 100vh;
     align-items: center;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     transition: .3s ease-in-out;
     background: transparent;
     -webkit-backdrop-filter: blur(30px);
     backdrop-filter: blur(30px);
+    overflow: auto;
   }
   
   .aud_conta.aucota { 
     flex-direction: column;
     max-width: 400px;
     transition: .3s ease-in-out;
+    margin-top: 100px;
   }
 
   .aud_conta img.acota_img { 
@@ -455,6 +427,7 @@ input[type="range"]::-ms-track {
     height: 400px;
     transition: .3s ease-in-out;
     box-shadow: 0 0 5px #00000058;
+    pointer-events: none;
   }
   
   .controls_one.onecot { 
@@ -493,6 +466,45 @@ input[type="range"]::-ms-track {
 
   body.mainboxy { 
     overflow: hidden;
+  }
+
+  .im_tool1 .h3 { 
+    max-width: 200px;
+  }
+
+@media screen and (max-width:600px) {
+
+  .song_pn .h2{ 
+    font-size: 60px;
+  }
+  .seekers_main { 
+    position: absolute;
+    top:90%;
+    left: 0;
+    padding:10px;
+    background: var(--mainbg);
+    border-bottom: 1px solid #eaeae9a0;
+    transition: .3s ease-in-out;
+  }
+
+  .tool_aud_grid { 
+    margin-top: 110px;
+    padding: 10px;
+    transition: .3s ease-in-out;
+  }
+
+  .uploadspart { 
+    margin-top: 100px;
+    padding: 10px;
+    transition: .3s ease-in-out;
+  }
+
+  .now_playing img { 
+    width: 10rem;
+    height: 10rem;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: .3s ease-in-out;
   }
 
 }

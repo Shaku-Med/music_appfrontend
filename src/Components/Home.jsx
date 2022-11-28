@@ -162,11 +162,13 @@ function Home({socket}) {
                         }
                     }}
                      key={key} className="im_tool1">
+                        <div className="co_mi">
                         <img onError={e => { 
                             e.target.src = "https://st.depositphotos.com/1002049/3381/i/600/depositphotos_33813075-stock-photo-error.jpg"
                         }} src={val.audioimage} alt="" />
-                        <div title={val.audiotitle} className="h3" style={{color:localStorage.getItem("index") === val.audioid ? "palegreen" : "val(--maincl)" ? value === val.audioid ? playing === false : "var(--maincl)" : "palegreen"}}>{val.audiotitle}</div>
                         <i  className={value === val.audioid ? playing === false ? "fa fa-play" : "fa fa-pause" : "fa fa-play"} style={{color: 'white'}}></i>
+                        </div>
+                        <div title={val.audiotitle} className="h3" style={{color:localStorage.getItem("index") === val.audioid ? "palegreen" : "val(--maincl)" ? value === val.audioid ? playing === false : "var(--maincl)" : "palegreen"}}>{val.audiotitle}</div>
                     </div>
                  )
                })
