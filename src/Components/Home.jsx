@@ -51,8 +51,10 @@ function Home({socket}) {
     window.onscroll = e => { 
         let scroll = window.scrollY
         let now_playing = document.querySelector(".now_playing")
+        let sweet_blur = document.querySelector(".sweet_blur")
 
         now_playing.style.backgroundPositionY = .5 * scroll + 'px'
+        sweet_blur.style.backgroundPositionY = .5 * scroll + 'px'
     }
 
     // Visualizer...
@@ -79,8 +81,9 @@ function Home({socket}) {
            </button>
         </Link>
 
-        
-        <div style={{backgroundImage: `linear-gradient(to top left, #00000058 0%, var(--mainbg) 60%), url(${note.audioimage})`}} className="now_playing">
+       <div className="mainpa">
+         
+       <div style={{backgroundImage: `linear-gradient(to top left, #00000058 0%, var(--mainbg) 60%), url(${note.audioimage})`}} className="now_playing">
             <div className="mage_cont" style={{position: 'relative'}}>
             <img
              onError={e => { 
@@ -124,8 +127,10 @@ function Home({socket}) {
                 <div className="p">{localStorage.getItem("index") && localStorage.getItem("index") !== null ? "Now playing...": "Nothing's playing."}</div>
             </div>
         </div>
+       </div>
 
-        <div className="home_tools">
+        <div className="sweet_blur" style={{backgroundImage: `url(${note.audioimage})`}} >
+        <div  className="home_tools">
             { 
                data.map((val, key) => { 
                  return ( 
@@ -173,6 +178,7 @@ function Home({socket}) {
                  )
                })
             }
+        </div>
         </div>
 
         <div className="visualizer">

@@ -16,7 +16,6 @@ function Audio() {
   const [play_len, setplaylen] = useState('')
  
  
-  var f;
 
   useEffect(() => {
 
@@ -65,13 +64,11 @@ function Audio() {
               navigator.mediaSession.setActionHandler('pause', () => {
                 setplaying(false)
                 audio.pause()
-                f = 0;
               });
 
               navigator.mediaSession.setActionHandler('play', () => {
                 setplaying(true)
                 audio.play()
-                f = 1;
               });
 
               navigator.mediaSession.setActionHandler('nexttrack', () => {
@@ -98,8 +95,6 @@ function Audio() {
           Cookies.remove("c_usr");
         }
       });
-
-      audio.currentTime = localStorage.getItem("currentTimes") && localStorage.getItem("currentTimes") !== null ? localStorage.getItem("currentTimes") : 0;
 
 
       audio.ontimeupdate = e => {
@@ -155,47 +150,25 @@ function Audio() {
         // else { 
         //   setplaylen("0:00")
         // }
-
-
-        let position  = localStorage.getItem("currentTimes") && localStorage.getItem("currentTimes") !== null ? localStorage.getItem("currentTimes") : 0;
-        if(!isNaN(audio.duration)){ 
-          position = audio.currentTime * (100 / audio.duration)
-          localStorage.setItem("currentTimes", position)
-          rangeie.value = position
-        }
-
+  
       }
 
       let rangeie = document.querySelector("#rangeie")
-      rangeie.value = localStorage.getItem("currentTimes") && localStorage.getItem("currentTimes") !== null ? localStorage.getItem("currentTimes") : 0;
+      rangeie.value = "0"
 
-      if(!localStorage.getItem("currentTimes")){ 
-        localStorage.setItem("currentTimes", 0)
-      }
+      let position  = 0;
+      setInterval(() => {
+        if(!isNaN(audio.duration)){ 
+          position = audio.currentTime * (100 / audio.duration)
+          rangeie.value = position
+        }
+      }, 1000);
 
-    
+
 
       // 
 
-   
-
-      document.onkeydown = e => { 
-        e.preventDefault()
-        let audio = document.querySelector("audio")
-       if(e.keyCode === 32){ 
-        if(f === 1){ 
-            setplaying(false)
-            audio.pause()
-          f = 0;
-        }
-        else { 
-            setplaying(true)
-            audio.play()
-          f = 1;
-        }
-       }
-      }
-
+    
   }, []);
 
 
@@ -227,13 +200,11 @@ function Audio() {
         navigator.mediaSession.setActionHandler('pause', () => {
           setplaying(false)
           audio.pause()
-          f = 0;
         });
 
         navigator.mediaSession.setActionHandler('play', () => {
           setplaying(true)
           audio.play()
-          f = 1;
         });
 
         navigator.mediaSession.setActionHandler('nexttrack', () => {

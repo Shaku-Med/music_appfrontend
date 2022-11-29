@@ -472,8 +472,35 @@ input[type="range"]::-ms-track {
     max-width: 200px;
   }
 
+  .home_tools { 
+    width: 100%;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    padding:40px;
+    background-image: linear-gradient(to top, #00000058 0%, var(--mainbg) 60%) ;
+    transition: .3s ease-in-out;
+  }
+
+  .sweet_blur { 
+    background-position:center;
+    background-size: cover;
+    width: 100%;
+  }
+
+  .tool_aud_grid { 
+    padding:0;
+  }
+
+  .mainpa { 
+    padding: 20px;
+    width: 100%;
+  }
+
 @media screen and (max-width:600px) {
 
+  .home_tools { 
+    padding: 10px;
+  }
   .song_pn .h2{ 
     font-size: 60px;
   }
@@ -489,7 +516,6 @@ input[type="range"]::-ms-track {
 
   .tool_aud_grid { 
     margin-top: 110px;
-    padding: 10px;
     transition: .3s ease-in-out;
   }
 
