@@ -43,9 +43,21 @@ function Home({socket}) {
     notdata.map((val) => { 
         if(val.audioid === localStorage.getItem('index') || val.audioid === value){ 
             setnote(val)
+
+            let video = document.querySelector("video")
+            video.style.display = "none"
+            if(value === "15c9856b-8a52-411f-8cf3-52a3f078d29b"){
+                video.play()
+                video.style.display = "block"
+            }
+            else { 
+                video.pause()
+            }
         }
     })
  }, [value])
+
+ const [videoco, setvideoco] = useState(false)
 
  useEffect(() => { 
     window.onscroll = e => { 
@@ -60,8 +72,13 @@ function Home({socket}) {
     // Visualizer...
 
 
-
  }, [])
+
+ const [truth, settu] = useState(true)
+
+ setInterval(() => {
+    settu(true)
+ }, 10);
 
   return (
     <div className="tool_aud_grid">
@@ -81,8 +98,8 @@ function Home({socket}) {
            </button>
         </Link>
 
-       <div style={{width: "100%", padding: "10px", marginTop: "20px", marginBottom: "10px"}}>
-          <video playsInline style={{width: "100%"}} src="https://musicbackend.mohamedbrima.repl.co/Audio/trim.8eb359d8-6245-4904-96fc-32abe08ad0e5.mov"/>
+       <div className='vicontai'>
+          <video muted playsInline controlsList='nodownload' controls src="https://musicbackend.mohamedbrima.repl.co/Audio/trim.8eb359d8-6245-4904-96fc-32abe08ad0e5.mov"/>
        </div>
 
        <div className="mainpa">
@@ -102,10 +119,30 @@ function Home({socket}) {
                         if(playing === false){ 
                             setplaying(true)
                             audio.play()
+
+                                let video = document.querySelector("video")
+                                video.style.display = "none"
+                                if(value === "15c9856b-8a52-411f-8cf3-52a3f078d29b"){
+                                    video.play()
+                                    video.style.display = "block"
+                                }
+                                else { 
+                                    video.pause()
+                                }
                         }
                         else { 
                             setplaying(false)
                             audio.pause()
+
+                            let video = document.querySelector("video")
+                            video.style.display = "none"
+                            if(value === "15c9856b-8a52-411f-8cf3-52a3f078d29b"){
+                                video.pause()
+                                video.style.display = "block"
+                            }
+                            else { 
+                                video.pause()
+                            }
                     }
                 }
                 else { 
@@ -148,10 +185,30 @@ function Home({socket}) {
                                 if(playing === false){ 
                                     setplaying(true)
                                     audio.play()
+
+                                    let video = document.querySelector("video")
+                                video.style.display = "none"
+                                if(value === "15c9856b-8a52-411f-8cf3-52a3f078d29b"){
+                                    video.play()
+                                    video.style.display = "block"
+                                }
+                                else { 
+                                    video.pause()
+                                }
                                 }
                                 else { 
                                     setplaying(false)
                                     audio.pause()
+
+                                    let video = document.querySelector("video")
+                            video.style.display = "none"
+                            if(value === "15c9856b-8a52-411f-8cf3-52a3f078d29b"){
+                                video.pause()
+                                video.style.display = "block"
+                            }
+                            else { 
+                                video.pause()
+                            }
                             }
                         }
                         else { 
@@ -182,12 +239,11 @@ function Home({socket}) {
                  )
                })
             }
+        <h1 style={{height: '30vh'}}></h1>
         </div>
         </div>
 
-        <div className="visualizer">
-            <canvas id="canvas"></canvas>
-        </div>
+       
     </div>
   )
 }

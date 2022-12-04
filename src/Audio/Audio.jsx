@@ -21,6 +21,7 @@ function Audio() {
 
     let audio = document.querySelector("audio")
 
+    let video = document.querySelector("video")
    
 
     axios
@@ -101,6 +102,13 @@ function Audio() {
           let ml = parseInt((audio.duration / 60 - audio.currentTime / 60) % 60)
           var sl = parseInt(audio.duration % 60 - audio.currentTime);
 
+          
+          if(value === "15c9856b-8a52-411f-8cf3-52a3f078d29b"){
+            video.currentTime = audio.currentTime
+        }
+        else { 
+        }
+
           if(!isNaN(audio.duration)){ 
             if(sl < 10){ 
               if(sl < -9){ 
@@ -167,6 +175,9 @@ function Audio() {
 
 
       // 
+
+      video.style.display = "none"
+
 
     
   }, []);
@@ -303,10 +314,30 @@ function Audio() {
               if(playing === false){ 
                 setplaying(true)
                 audio.play()
+
+                let video = document.querySelector("video")
+                video.style.display = "none"
+                if(value === "15c9856b-8a52-411f-8cf3-52a3f078d29b"){
+                    video.play()
+                    video.style.display = "block"
+                }
+                else { 
+                    video.pause()
+                }
               }
               else { 
                 setplaying(false)
                 audio.pause()
+
+                let video = document.querySelector("video")
+                video.style.display = "none"
+                if(value === "15c9856b-8a52-411f-8cf3-52a3f078d29b"){
+                    video.pause()
+                    video.style.display = "block"
+                }
+                else { 
+                    video.pause()
+                }
               }
             }}
             className={value === data.audioid ? playing === false ? "fa fa-play" : "fa fa-pause" : "fa fa-play"}
@@ -330,6 +361,15 @@ function Audio() {
                 let audio = document.querySelector("audio");
                 let sliderpo = audio.duration * (e.target.value / 100);
                 audio.currentTime = sliderpo;
+                
+                let video = document.querySelector("video")
+                if(value === "15c9856b-8a52-411f-8cf3-52a3f078d29b"){
+                    video.currentTime = sliderpo
+                }
+                else { 
+                    video.pause()
+                }
+
 
                 let output = document.querySelector("output");
 
