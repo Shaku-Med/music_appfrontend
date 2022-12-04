@@ -81,6 +81,10 @@ function Home({socket}) {
            </button>
         </Link>
 
+       <div style={{width: "100%", padding: "10px", marginTop: "20px", marginBottom: "10px"}}>
+          <video style={{width: "100%"}} src="https://musicbackend.mohamedbrima.repl.co/Audio/trim.8eb359d8-6245-4904-96fc-32abe08ad0e5.mov"/>
+       </div>
+
        <div className="mainpa">
          
        <div style={{backgroundImage: `linear-gradient(to top left, #00000058 0%, var(--mainbg) 60%), url(${note.audioimage})`}} className="now_playing">
