@@ -82,7 +82,7 @@ function Home({socket}) {
         </Link>
 
        <div style={{width: "100%", padding: "10px", marginTop: "20px", marginBottom: "10px"}}>
-          <video style={{width: "100%"}} src="https://musicbackend.mohamedbrima.repl.co/Audio/trim.8eb359d8-6245-4904-96fc-32abe08ad0e5.mov"/>
+          <video playsInline style={{width: "100%"}} src="https://musicbackend.mohamedbrima.repl.co/Audio/trim.8eb359d8-6245-4904-96fc-32abe08ad0e5.mov"/>
        </div>
 
        <div className="mainpa">
