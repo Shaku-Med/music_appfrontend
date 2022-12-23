@@ -3,17 +3,17 @@
   "name": "Listen | Free | Songs",
   "icons": [
     {
-      "src": "https://static.xx.fbcdn.net/rsrc.php/yD/r/d4ZIVX-5C-b.ico",
+      "src": "./logo.png",
       "sizes": "32x32",
       "type": "image/x-icon"
     },
     {
-      "src": "https://static.xx.fbcdn.net/rsrc.php/yD/r/d4ZIVX-5C-b.ico",
+      "src": "./logo.png",
       "type": "image/png",
       "sizes": "32x32"
     },
     {
-      "src": "https://static.xx.fbcdn.net/rsrc.php/yD/r/d4ZIVX-5C-b.ico",
+      "src": "./logo.png",
       "type": "image/png",
       "sizes": "32x32"
     }
