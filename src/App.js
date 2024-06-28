@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import Auth from './Auth/Auth';
 import Audio from './Audio/Audio';
 import { ContextAudio } from './Audconnection/ContextAudio';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import Routing from './Routing';
 
 let App = () => {
@@ -101,12 +101,12 @@ let App = () => {
                           }
                           else {
                             return (
-                              <BrowserRouter key={key}>
+                              <HashRouter key={key}>
                                 <ContextAudio.Provider value={{ value, setvalue, playing, setplaying, similar, setplaysimilar, audid, setaudid }}>
                                   <Audio />
                                   <Routing />
                                 </ContextAudio.Provider>
-                              </BrowserRouter>
+                              </HashRouter>
                             )
                           }
                         })
