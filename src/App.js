@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import Auth from './Auth/Auth';
 import Audio from './Audio/Audio';
@@ -19,7 +19,7 @@ function App() {
   const [similar, setplaysimilar] =  useState(false)
   const [audid, setaudid] =  useState(false)
 
-  useEffect(() => { 
+  useLayoutEffect(() => { 
     if(window.top !== window.self){ 
       setusr(false)
     }

@@ -24,223 +24,241 @@ function Audio() {
     let video = document.querySelector("video")
    
 
-    axios
-      .post("https://musicbackend.mohamedbrima.repl.co/home/data/get", {
-        c_usr: Cookies.get("c_usr"),
-      })
-      .then((res) => {
-        if (res.data !== "wrong") {
-          setownerp(res.data)
-          next_data(res.data)
-          audio.onended = e => { 
-          let rand = Math.floor(Math.random() * res.data.length)
-          localStorage.setItem("index", res.data[rand].audioid)
-          setvalue(res.data[rand].audioid)
-          setplaying(true)
+    let fnc = () => {
+      try {
+        if (audio && video) {
+          axios
+            .post("https://crppdn-3000.csb.app/home/data/get", {
+              c_usr: Cookies.get("c_usr"),
+            })
+            .then((res) => {
+              if (res.data !== "wrong") {
+                setownerp(res.data)
+                next_data(res.data)
+                audio.onended = e => {
+                  let rand = Math.floor(Math.random() * res.data.length)
+                  localStorage.setItem("index", res.data[rand].audioid)
+                  setvalue(res.data[rand].audioid)
+                  setplaying(true)
 
-          localStorage.setItem("next", res.data[rand].audioid)
-         }
+                  localStorage.setItem("next", res.data[rand].audioid)
+                }
 
-          res.data.map(val => { 
-            if(val.audioid === localStorage.getItem('index') || val.audioid === value){ 
-              setdata(val);
-              audio.src = val.audio
+                res.data.map(val => {
+                  if (val.audioid === localStorage.getItem('index') || val.audioid === value) {
+                    setdata(val);
+                    audio.src = val.audio
 
-              if ('mediaSession' in navigator) {
-                navigator.mediaSession.metadata = new MediaMetadata({
-                  title: val.audiotitle,
-                  artist: 'Playing on Listen...',
-                  album: 'Listen got more for you...',
-                  artwork: [
-                    { src: val.audioimage,   sizes: '96x96',   type: 'image/png' },
-                    { src: val.audioimage, sizes: '128x128', type: 'image/png' },
-                    { src: val.audioimage, sizes: '192x192', type: 'image/png' },
-                    { src: val.audioimage, sizes: '256x256', type: 'image/png' },
-                    { src: val.audioimage, sizes: '384x384', type: 'image/png' },
-                    { src: val.audioimage, sizes: '512x512', type: 'image/png' },
-                  ]
-                });
+                    if ('mediaSession' in navigator) {
+                      navigator.mediaSession.metadata = new MediaMetadata({
+                        title: val.audiotitle,
+                        artist: 'Playing on Listen...',
+                        album: 'Listen got more for you...',
+                        artwork: [
+                          { src: val.audioimage, sizes: '96x96', type: 'image/png' },
+                          { src: val.audioimage, sizes: '128x128', type: 'image/png' },
+                          { src: val.audioimage, sizes: '192x192', type: 'image/png' },
+                          { src: val.audioimage, sizes: '256x256', type: 'image/png' },
+                          { src: val.audioimage, sizes: '384x384', type: 'image/png' },
+                          { src: val.audioimage, sizes: '512x512', type: 'image/png' },
+                        ]
+                      });
+                    }
+
+                    navigator.mediaSession.setActionHandler('pause', () => {
+                      setplaying(false)
+                      audio.pause()
+                    });
+
+                    navigator.mediaSession.setActionHandler('play', () => {
+                      setplaying(true)
+                      audio.play()
+                    });
+
+                    navigator.mediaSession.setActionHandler('nexttrack', () => {
+                      let rand = Math.floor(Math.random() * set_next_data.length)
+                      localStorage.setItem("next", localStorage.getItem("index"))
+                      localStorage.setItem("index", set_next_data[rand].audioid)
+                      setvalue(set_next_data[rand].audioid)
+                      setplaying(true)
+        
+                    });
+      
+      
+                    navigator.mediaSession.setActionHandler('previoustrack', () => {
+                      localStorage.setItem("index", localStorage.getItem("next"))
+                      setvalue(localStorage.getItem("next"))
+                      setplaying(true)
+        
+                    });
+
+                  }
+                })
+        
+              } else {
+                Cookies.remove("c_usr");
               }
-
-              navigator.mediaSession.setActionHandler('pause', () => {
-                setplaying(false)
-                audio.pause()
-              });
-
-              navigator.mediaSession.setActionHandler('play', () => {
-                setplaying(true)
-                audio.play()
-              });
-
-              navigator.mediaSession.setActionHandler('nexttrack', () => {
-                let rand = Math.floor(Math.random() * set_next_data.length)
-                localStorage.setItem("next", localStorage.getItem("index"))
-                  localStorage.setItem("index", set_next_data[rand].audioid)
-                  setvalue(set_next_data[rand].audioid)
-                  setplaying(true)
-        
-              });
-      
-      
-              navigator.mediaSession.setActionHandler('previoustrack', () => {
-                localStorage.setItem("index", localStorage.getItem("next"))
-                  setvalue(localStorage.getItem("next"))
-                  setplaying(true)
-        
-              });
-
-            }
-          })
-        
-        } else {
-          Cookies.remove("c_usr");
-        }
-      });
+            });
 
 
-      audio.ontimeupdate = e => {
-          let ml = parseInt((audio.duration / 60 - audio.currentTime / 60) % 60)
-          var sl = parseInt(audio.duration % 60 - audio.currentTime);
+          audio.ontimeupdate = e => {
+            let ml = parseInt((audio.duration / 60 - audio.currentTime / 60) % 60)
+            var sl = parseInt(audio.duration % 60 - audio.currentTime);
 
           
-          if(value === "15c9856b-8a52-411f-8cf3-52a3f078d29b"){
-            video.currentTime = audio.currentTime
-        }
-        else { 
-        }
+            if (value === "15c9856b-8a52-411f-8cf3-52a3f078d29b") {
+              video.currentTime = audio.currentTime
+            }
+            else {
+            }
 
-          if(!isNaN(audio.duration)){ 
-            if(sl < 10){ 
-              if(sl < -9){ 
+            if (!isNaN(audio.duration)) {
+              if (sl < 10) {
+                if (sl < -9) {
+                  setplaylen("-" + ml + ":" + Math.abs(sl))
+                }
+                else {
+                  setplaylen("-" + ml + ":0" + Math.abs(sl))
+                }
+              }
+              else {
                 setplaylen("-" + ml + ":" + Math.abs(sl))
               }
-              else { 
-                setplaylen("-" + ml + ":0" + Math.abs(sl))
-              }
-            }
-            else { 
-              setplaylen("-" + ml + ":" + Math.abs(sl))
-            }
 
+            }
+            else {
+              setplaylen("-0:00")
+            }
+  
+            //counting up
+            var s = parseInt(audio.currentTime % 60);
+            var m = parseInt((audio.currentTime / 60) % 60);
+            if (s < 10) {
+              setfulltime(m + ":0" + s)
+            }
+            else {
+              setfulltime(m + ":" + s)
+            }
+  
+  
+            // Max Duration done
+  
+  
+            // var dura = audio.duration
+  
+            // var sec = new Number()
+            // var min = new Number()
+  
+            // sec = Math.floor( dura );    
+            // min = Math.floor( sec / 60 );
+            // min = min >= 10 ? min : '0' + min;    
+            // sec = Math.floor( sec % 60 );
+            // sec = sec >= 10 ? sec : '0' + sec;
+  
+            // if(!isNaN(audio.duration)){ 
+            //   setplaylen(min + ":" + sec)
+            // }
+            // else { 
+            //   setplaylen("0:00")
+            // }
+  
           }
-          else { 
-            setplaylen("-0:00")
-          }
-  
-        //counting up
-        var s = parseInt(audio.currentTime % 60);
-        var m = parseInt((audio.currentTime / 60) % 60);
-        if(s < 10){ 
-          setfulltime(m + ":0" + s)
+
+          let rangeie = document.querySelector("#rangeie")
+          rangeie.value = "0"
+
+          let position = 0;
+          setInterval(() => {
+            if (!isNaN(audio.duration)) {
+              position = audio.currentTime * (100 / audio.duration)
+              rangeie.value = position
+            }
+          }, 1000);
+
+
+
+          // 
+
+          video.style.display = "none"
+
+
         }
-        else { 
-          setfulltime(m + ":" + s)
-        }
-  
-  
-        // Max Duration done
-  
-  
-        // var dura = audio.duration
-  
-        // var sec = new Number()
-        // var min = new Number()
-  
-        // sec = Math.floor( dura );    
-        // min = Math.floor( sec / 60 );
-        // min = min >= 10 ? min : '0' + min;    
-        // sec = Math.floor( sec % 60 );
-        // sec = sec >= 10 ? sec : '0' + sec;
-  
-        // if(!isNaN(audio.duration)){ 
-        //   setplaylen(min + ":" + sec)
-        // }
-        // else { 
-        //   setplaylen("0:00")
-        // }
-  
       }
+      catch { }
+    }
 
-      let rangeie = document.querySelector("#rangeie")
-      rangeie.value = "0"
-
-      let position  = 0;
-      setInterval(() => {
-        if(!isNaN(audio.duration)){ 
-          position = audio.currentTime * (100 / audio.duration)
-          rangeie.value = position
-        }
-      }, 1000);
-
-
-
-      // 
-
-      video.style.display = "none"
-
-
+    fnc()
     
   }, []);
 
 
 
-  useEffect(() => { 
+  useEffect(() => {
     let audio = document.querySelector("audio")
 
-    owner_p.map(val => { 
-      if(val.audioid === localStorage.getItem('index') || val.audioid === value){ 
-        setdata(val);
-        audio.src = val.audio
-        audio.play()
-        if ('mediaSession' in navigator) {
-          navigator.mediaSession.metadata = new MediaMetadata({
-            title: val.audiotitle,
-            artist: 'Playing on Listen...',
-            album: 'Listen got more for you...',
-            artwork: [
-              { src: val.audioimage,   sizes: '96x96',   type: 'image/png' },
-              { src: val.audioimage, sizes: '128x128', type: 'image/png' },
-              { src: val.audioimage, sizes: '192x192', type: 'image/png' },
-              { src: val.audioimage, sizes: '256x256', type: 'image/png' },
-              { src: val.audioimage, sizes: '384x384', type: 'image/png' },
-              { src: val.audioimage, sizes: '512x512', type: 'image/png' },
-            ]
-          });
-        }
+    let fnc = () => {
+      try {
+        owner_p.map(val => {
+          if (val.audioid === localStorage.getItem('index') || val.audioid === value) {
+            setdata(val);
+            audio.src = val.audio
+            audio.play()
+            if ('mediaSession' in navigator) {
+              navigator.mediaSession.metadata = new MediaMetadata({
+                title: val.audiotitle,
+                artist: 'Playing on Listen...',
+                album: 'Listen got more for you...',
+                artwork: [
+                  { src: val.audioimage, sizes: '96x96', type: 'image/png' },
+                  { src: val.audioimage, sizes: '128x128', type: 'image/png' },
+                  { src: val.audioimage, sizes: '192x192', type: 'image/png' },
+                  { src: val.audioimage, sizes: '256x256', type: 'image/png' },
+                  { src: val.audioimage, sizes: '384x384', type: 'image/png' },
+                  { src: val.audioimage, sizes: '512x512', type: 'image/png' },
+                ]
+              });
+            }
 
-        navigator.mediaSession.setActionHandler('pause', () => {
-          setplaying(false)
-          audio.pause()
-        });
+            navigator.mediaSession.setActionHandler('pause', () => {
+              setplaying(false)
+              audio.pause()
+            });
 
-        navigator.mediaSession.setActionHandler('play', () => {
-          setplaying(true)
-          audio.play()
-        });
+            navigator.mediaSession.setActionHandler('play', () => {
+              setplaying(true)
+              audio.play()
+            });
 
-        navigator.mediaSession.setActionHandler('nexttrack', () => {
-          let rand = Math.floor(Math.random() * set_next_data.length)
-          localStorage.setItem("next", localStorage.getItem("index"))
-            localStorage.setItem("index", set_next_data[rand].audioid)
-            setvalue(set_next_data[rand].audioid)
-            setplaying(true)
+            navigator.mediaSession.setActionHandler('nexttrack', () => {
+              let rand = Math.floor(Math.random() * set_next_data.length)
+              localStorage.setItem("next", localStorage.getItem("index"))
+              localStorage.setItem("index", set_next_data[rand].audioid)
+              setvalue(set_next_data[rand].audioid)
+              setplaying(true)
   
-        });
+            });
 
 
-        navigator.mediaSession.setActionHandler('previoustrack', () => {
-          localStorage.setItem("index", localStorage.getItem("next"))
-            setvalue(localStorage.getItem("next"))
-            setplaying(true)
+            navigator.mediaSession.setActionHandler('previoustrack', () => {
+              localStorage.setItem("index", localStorage.getItem("next"))
+              setvalue(localStorage.getItem("next"))
+              setplaying(true)
   
-        });
+            });
 
-      }
-    })
+          }
+        })
 
  
+      }
+      catch { }
+    }
 
-  }, [value])
+    if (audio) {
+      fnc()
+    }
+
+  }, [value]);
 
 
 

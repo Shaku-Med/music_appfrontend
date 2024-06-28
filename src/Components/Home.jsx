@@ -20,7 +20,7 @@ function Home({socket}) {
  const [note, setnote] = useState([])
 
  useEffect(() => { 
-    axios.post("https://musicbackend.mohamedbrima.repl.co/home/data/get", { 
+    axios.post("https://crppdn-3000.csb.app/home/data/get", { 
        c_usr: Cookies.get("c_usr")
     }).then(res => { 
         if(res.data !== "wrong"){ 
@@ -99,7 +99,7 @@ function Home({socket}) {
         </Link>
 
        <div className='vicontai'>
-          <video muted playsInline controlsList='nodownload' controls src="https://musicbackend.mohamedbrima.repl.co/Audio/trim.8eb359d8-6245-4904-96fc-32abe08ad0e5.mov"/>
+          <video muted playsInline controlsList='nodownload' controls src="https://crppdn-3000.csb.app/Audio/trim.8eb359d8-6245-4904-96fc-32abe08ad0e5.mov"/>
        </div>
 
        <div className="mainpa">

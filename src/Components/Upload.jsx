@@ -11,54 +11,59 @@ function Upload() {
 
     const navigate = useNavigate()
 
-    const handle_send = e => { 
-        e.preventDefault()
+    const handle_send = async e => {
+        try {
+            e.preventDefault()
 
-        if(title === ""){ 
-            alert("Enter your title")
-        }
-        else if(audio === ""){ 
-            alert("Choose your Audio file")
-        }
-        else if(image === ""){ 
-            alert("Choose your Image file")
-        }
-        else {
-
-            let moveme = document.getElementById("moveme")
-            moveme.disabled = true
-            let arr = { 
-                image: image
-            } 
-           axios.post("https://musicbackend.mohamedbrima.repl.co/uploads/image", arr, { 
-                headers: { 
-                    "Content-Type": "multipart/form-data"
-                }
-           } )
-
-
-           let ars = { 
-            uid: Cookies.get("c_usr"),
-            audio: audio,
-            title: title
-           } 
-       axios.post("https://musicbackend.mohamedbrima.repl.co/uploads/audio", ars, { 
-            headers: { 
-                "Content-Type": "multipart/form-data"
+            if (title === "") {
+                alert("Enter your title")
             }
-       } ).then(res => { 
-          if(res.data === 'success'){ 
-            navigate({
-                pathname: "../",
-                state: "fetch"
-            })
-            setTimeout(() => {
-                window.location.reload()
-            }, 2000);
-          }
-       })
+            else if (audio === "") {
+                alert("Choose your Audio file")
+            }
+            else if (image === "") {
+                alert("Choose your Image file")
+            }
+            else {
+
+                let moveme = document.getElementById("moveme")
+                moveme.disabled = true
+                let arr = {
+                    image: image
+                }
+                await axios.post("https://crppdn-3000.csb.app/uploads/image", arr, {
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
+                })
+
+
+                let ars = {
+                    uid: Cookies.get("c_usr"),
+                    audio: audio,
+                    title: title
+                }
+                await axios.post("https://crppdn-3000.csb.app/uploads/audio", ars, {
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
+                }).then(res => {
+                    if (res.data === 'success') {
+                        navigate({
+                            pathname: "../",
+                            state: "fetch"
+                        })
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 2000);
+                    }
+                })
+            }
         }
-    }
+        catch {
+            alert('upload failed.')
+        }
+    };
 
   return (
     <div className=" uploadspart">
