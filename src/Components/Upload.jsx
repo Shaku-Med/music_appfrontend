@@ -62,6 +62,9 @@ function Upload() {
         }
         catch {
             alert('upload failed.')
+            setTimeout(() => {
+                window.location.reload()
+            }, 2000);
         }
     };
 

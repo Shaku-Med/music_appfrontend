@@ -10,7 +10,7 @@ import Routing from './Routing';
 
 let App = () => {
 
-  const [auth, setauth] = useState(true)
+  const [auth, setauth] = useState(null)
   const [usr, setusr] = useState(null)
 
   // Change max routing...
@@ -19,61 +19,69 @@ let App = () => {
   const [similar, setplaysimilar] =  useState(false)
   const [audid, setaudid] =  useState(false)
 
-  useLayoutEffect(() => { 
-    setusr(true)
-    setInterval(() => {
-      if(Cookies.get("c_usr")){ 
-        if(Cookies.get("c_usr") !== null){ 
-          setauth(true)
-        }
-        else { 
-          setauth(false)
-        }
+  useLayoutEffect(() => {
+    let fnd = () => {
+      try {
+        setusr(true)
+        setInterval(() => {
+          if (Cookies.get("c_usr")) {
+            if (Cookies.get("c_usr") !== null) {
+              setauth(true)
+            }
+            else {
+              setauth(false)
+            }
+          }
+          else {
+            setauth(false)
+          }
+        }, 10);
+
+        var a;
+
+
+        window.addEventListener('keydown', e => {
+          let body = document.querySelector("body")
+          if (e.ctrlKey && e.key === "/") {
+            if (body.requestFullscreen()) {
+              body.requestFullscreen()
+            }
+            else if (body.webkitRequestFullscreen()) {
+              body.webkitRequestFullscreen()
+            }
+            else if (body.msRequestFullscreen()) {
+              body.msRequestFullscreen()
+            }
+            else if (body.requestPointerLock()) {
+              body.requestPointerLock()
+            }
+          }
+        })
+
+        window.addEventListener('dblclick', e => {
+          let body = document.querySelector("body")
+          if (e.ctrlKey && e.key === "/") {
+            if (body.requestFullscreen()) {
+              body.requestFullscreen()
+            }
+            else if (body.webkitRequestFullscreen()) {
+              body.webkitRequestFullscreen()
+            }
+            else if (body.msRequestFullscreen()) {
+              body.msRequestFullscreen()
+            }
+            else if (body.requestPointerLock()) {
+              body.requestPointerLock()
+            }
+          }
+        })
       }
-      else { 
-        setauth(false)
-      }
-    }, 10);
-
-    var a;
-
-
-    window.onkeydown = e => { 
-      let body = document.querySelector("body")
-      if(e.ctrlKey && e.key === "/"){ 
-        if(body.requestFullscreen()){ 
-          body.requestFullscreen()
-        }
-        else if(body.webkitRequestFullscreen()){ 
-          body.webkitRequestFullscreen()
-        }
-        else if(body.msRequestFullscreen()){ 
-          body.msRequestFullscreen()
-        }
-        else if(body.requestPointerLock()){ 
-          body.requestPointerLock()
-        }
+      catch {
+        setTimeout(fnd, 2000)
       }
     }
-
-    window.ondblclick = e => { 
-      let body = document.querySelector("body")
-      if(e.ctrlKey && e.key === "/"){ 
-        if(body.requestFullscreen()){ 
-          body.requestFullscreen()
-        }
-        else if(body.webkitRequestFullscreen()){ 
-          body.webkitRequestFullscreen()
-        }
-        else if(body.msRequestFullscreen()){ 
-          body.msRequestFullscreen()
-        }
-        else if(body.requestPointerLock()){ 
-          body.requestPointerLock()
-        }
-      }
-    }
-  }, [])
+    fnd()
+  }, []);
 
   return (
     <>
