@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import Cookies from 'js-cookie';
